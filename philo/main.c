@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 15:54:05 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:47:37 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,40 @@ static int	args_valid(int argc, char **argv)
 	return (1);
 }
 
+void	*func(void *arg)
+{
+	printf("Hello from thread func\n");
+	return (arg);
+}
+
 static void	philo_init(t_philo *philo, int id)
 {
 	philo->id = id;
 	philo->dead = 0;
-	philo->eating = 0;
+	philo->eating = 1;
 	philo->sleeping = 0;
+	philo->thinking = 0;
+	pthread_create(&(philo->th), NULL, func, NULL);
+	philo->timestamp = 0;
 }
 
 static void	fork_init(t_fork *fork, int id)
 {
 	fork->id = id;
+}
+
+u_int64_t	get_time(void)
+{
+	struct timeval tv;
+
+	if (gettimeofday(&tv, NULL))
+		return (-1);
+	return (tv.tv_sec * (u_int64_t)1000 + tv.tv_usec / (u_int64_t)1000);
+}
+
+void	ft_usleep(int milliseconds)
+{
+	usleep(milliseconds * 1000);
 }
 
 static void	table_init(t_table *table, int argc, char **argv)
@@ -63,31 +86,32 @@ static void	table_init(t_table *table, int argc, char **argv)
 	table->philo_eat_no = 0;
 	if (argc == 6)
 		table->philo_eat_no = ft_atoi(argv[5]);
+	table->start_time = get_time();
 }
 
-void	*func(void *arg)
+void	eat(t_philo *philo, t_table table)
 {
-	printf("Hello from thread func\n");
-	return (arg);
+	//printf("start time: %llu, time: %llu\n", table.start_time, get_time());
+	//printf("%llu %d is eating\n", , philo->id);
+	write_message(ft_itoa(get_time() - table.start_time), ft_itoa(philo->id), "is eating\n");
+	//printf("%d\n",table.time_to_eat);
+	ft_usleep(table.time_to_eat);
 }
 
 int	main(int argc, char **argv)
 {
-	pthread_t	th;
 	t_table		table;
-	struct timeval tv;
 	
-	gettimeofday(&tv, NULL);
-	printf("start time: %d\n", tv.tv_usec);
 	if (!args_valid(argc, argv))
 		return (1);
 	table_init(&table, argc, argv);
-	//printf("philo no: %d, die time: %d, eat time: %d, sleep time: %d\n", table.philo_no, table.time_to_die, table.time_to_eat, table.time_to_sleep);
-	pthread_create(&th, NULL, func, NULL);
-	pthread_join(th, NULL);
-	usleep(100000);
-	gettimeofday(&tv, NULL);
-	printf("end time: %d\n", tv.tv_usec);
-
+	//ft_usleep(100);
+	eat(&(table.philos[0]), table);
+	eat(&(table.philos[0]), table);
+	eat(&(table.philos[0]), table);
+	eat(&(table.philos[0]), table);
+	eat(&(table.philos[0]), table);
+	eat(&(table.philos[0]), table);
+	eat(&(table.philos[0]), table);
 	//destroy table
 }

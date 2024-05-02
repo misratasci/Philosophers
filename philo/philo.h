@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:25:13 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 15:52:19 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:47:47 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,17 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdint.h>
 
 typedef struct s_philo
 {
-	int	id;
-	int	dead;
-	int	sleeping;
-	int	eating;
+	int			id;
+	int			dead;
+	int			sleeping;
+	int			eating;
+	int			thinking;
+	pthread_t	th;
+	int			timestamp;
 }	t_philo;
 
 typedef struct s_fork
@@ -41,12 +45,15 @@ typedef struct s_table
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		philo_eat_no;
+	u_int64_t	start_time;
 }	t_table;
 
 //utils
 int	valid_int(const char *s);
 
-//ft_atoi
+//libft
 int	ft_atoi(const char *str);
+char	*ft_itoa(int n);
+void	write_message(char *time,char *id, char* act);
 
 #endif

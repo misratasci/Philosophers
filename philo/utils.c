@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:41:46 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 15:07:22 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:40:05 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,13 @@ int	valid_int(const char *s)
 		i++;
 	}
 	return (1);
+}
+
+void	write_message(char *time,char *id, char* act)
+{
+	write(1, time, ft_strlen(time));
+	write(1, " ", 1);
+	write(1, id, ft_strlen(id));
+	write(1, " ", 1);
+	write(1, act, ft_strlen(act));
 }
