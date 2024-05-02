@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 15:15:18 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 15:54:05 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,19 @@ int	main(int argc, char **argv)
 {
 	pthread_t	th;
 	t_table		table;
+	struct timeval tv;
 	
+	gettimeofday(&tv, NULL);
+	printf("start time: %d\n", tv.tv_usec);
 	if (!args_valid(argc, argv))
 		return (1);
 	table_init(&table, argc, argv);
 	//printf("philo no: %d, die time: %d, eat time: %d, sleep time: %d\n", table.philo_no, table.time_to_die, table.time_to_eat, table.time_to_sleep);
 	pthread_create(&th, NULL, func, NULL);
 	pthread_join(th, NULL);
+	usleep(100000);
+	gettimeofday(&tv, NULL);
+	printf("end time: %d\n", tv.tv_usec);
 
 	//destroy table
 }

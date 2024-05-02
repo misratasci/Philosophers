@@ -6,31 +6,33 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:25:13 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 15:09:38 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 15:52:19 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
 # include <pthread.h>
-# include <stdio.h> //gerek yoksa sil
+# include <stdio.h>
 # include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
-typedef struct	s_philo
+typedef struct s_philo
 {
-	int id;
+	int	id;
 	int	dead;
 	int	sleeping;
 	int	eating;
 }	t_philo;
 
-typedef	struct	s_fork
+typedef struct s_fork
 {
 	int	id;	
 }	t_fork;
 
-typedef struct	s_table
+typedef struct s_table
 {
 	int		philo_no;
 	t_philo	*philos;
