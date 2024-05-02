@@ -2,7 +2,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
-SRCS = main.c
+SRCS = main.c utils.c
 OBJ = $(SRCS:.c=.o)
 
 all: $(NAME)
