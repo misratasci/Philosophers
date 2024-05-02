@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:51:28 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 20:36:32 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 22:34:44 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ void	ft_take_fork(t_philo *philo, t_table table)
 	else
 		fork2 = &(table.forks[philo->id - 1]);
 
-	fork1->is_being_used = 1;
-	fork2->is_being_used = 1;
+	pthread_mutex_lock(&(fork1->lock));
+	write_message(ft_itoa(get_time() - table.start_time), ft_itoa(philo->id), "has taken a fork\n");
+	pthread_mutex_lock(&(fork2->lock));
+	write_message(ft_itoa(get_time() - table.start_time), ft_itoa(philo->id), "has taken a fork\n");
 }
 
 void	ft_eat(t_philo *philo, t_table table)
 {
-	write_message(ft_itoa(get_time() - table.start_time), ft_itoa(philo->id), "is eating\n");
+	//write_message(ft_itoa(get_time() - table.start_time), ft_itoa(philo->id), "is eating\n");
+	printf("%llu %d is eating\n", get_time() - table.start_time, philo->id);
 	ft_usleep(table.time_to_eat);
 }
 
@@ -50,11 +53,15 @@ void	*live(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
+	/*
 	if (check_forks(*philo, *(philo->table)))
 		ft_eat(philo, *(philo->table));
+	*/
+	//ft_take_fork(philo, *(philo->table));
+	ft_eat(philo, *(philo->table));
 	return (arg);
 }
-
+/*
 int	check_forks(t_philo philo, t_table table)
 {
 	int i;
@@ -76,9 +83,10 @@ int	check_forks(t_philo philo, t_table table)
 		if(forks[table.philo_no - 1].is_being_used == 0)
 		i++;
 	}
-	/*
+	
 	if(i==2)
 		printf("%d yemek yiyebilir\n",philo.id);
-		*/
+		
 	return(i == 2);
 }
+*/
