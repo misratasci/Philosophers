@@ -6,11 +6,51 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:41:46 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 14:42:32 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 15:07:22 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i += 1;
+	return (i);
+}
+
+static int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	c1;
+	unsigned char	c2;
+	size_t			i;
+
+	i = 0;
+	while (i < n)
+	{
+		c1 = (unsigned char)s1[i];
+		c2 = (unsigned char)s2[i];
+		if (c1 != c2)
+		{
+			if (c1 > c2)
+				return (1);
+			else
+				return (-1);
+		}
+		i += 1;
+		if (c1 == 0 && c2 == 0)
+			break ;
+	}
+	return (0);
+}
+
+static int	ft_isdigit(int c)
+{
+	return (c >= 48 && c <= 57);
+}
 
 static int	int_in_limit(const char *s)
 {
