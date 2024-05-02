@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:25:13 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 20:14:14 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 20:50:46 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_philo
 
 typedef struct s_fork
 {
-	int	id;
-	int	is_being_used;
+	int				id;
+	pthread_mutex_t	lock;
 }	t_fork;
 
 typedef struct s_table

@@ -6,11 +6,26 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:51:28 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 20:17:42 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 20:36:32 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_take_fork(t_philo *philo, t_table table)
+{
+	t_fork	*fork1;
+	t_fork	*fork2;
+
+	fork1 = &(table.forks[philo->id]);
+	if (philo->id == 0)
+		fork2 = &(table.forks[table.philo_no - 1]);
+	else
+		fork2 = &(table.forks[philo->id - 1]);
+
+	fork1->is_being_used = 1;
+	fork2->is_being_used = 1;
+}
 
 void	ft_eat(t_philo *philo, t_table table)
 {
@@ -33,9 +48,10 @@ void	ft_sleep(t_philo *philo, t_table table)
 void	*live(void *arg)
 {
 	t_philo *philo;
-	
+
 	philo = (t_philo *)arg;
-	check_forks(*philo, *(philo->table));
+	if (check_forks(*philo, *(philo->table)))
+		ft_eat(philo, *(philo->table));
 	return (arg);
 }
 
@@ -50,17 +66,19 @@ int	check_forks(t_philo philo, t_table table)
 	if(forks[philo.id].is_being_used == 0)
 		i++;
 	//sağ
-	if (philo.id - 1 != 0)
+	if (philo.id != 0)
 	{
 		if(forks[philo.id - 1].is_being_used == 0)
 			i++;
 	}
-	else if (philo.id - 1 == 0)
+	else if (philo.id == 0)
 	{
 		if(forks[table.philo_no - 1].is_being_used == 0)
 		i++;
 	}
+	/*
 	if(i==2)
 		printf("%d yemek yiyebilir\n",philo.id);
+		*/
 	return(i == 2);
 }
