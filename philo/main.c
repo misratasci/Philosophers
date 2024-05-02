@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 18:13:04 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 20:13:41 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,22 @@ static int	args_valid(int argc, char **argv)
 	return (1);
 }
 
-void	*func(void *arg)
-{
-	printf("Hello from thread func\n");
-	return (arg);
-}
-
-static void	philo_init(t_philo *philo, int id)
+static void	philo_init(t_philo *philo, t_table *table, int id)
 {
 	philo->id = id;
 	philo->dead = 0;
 	philo->eating = 1;
 	philo->sleeping = 0;
 	philo->thinking = 0;
-	pthread_create(&(philo->th), NULL, func, NULL);
+	pthread_create(&(philo->th), NULL, live, philo);
 	philo->timestamp = 0;
+	philo->table = table;
 }
 
 static void	fork_init(t_fork *fork, int id)
 {
 	fork->id = id;
+	fork->is_being_used = 0;
 }
 
 static void	table_init(t_table *table, int argc, char **argv)
@@ -62,7 +58,7 @@ static void	table_init(t_table *table, int argc, char **argv)
 	i = 0;
 	while (i < table->philo_no)
 	{
-		philo_init(&(table->philos[i]), i);
+		philo_init(&(table->philos[i]), table, i);
 		fork_init(&(table->forks[i]), i);
 		i++;
 	}

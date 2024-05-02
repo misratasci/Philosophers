@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:25:13 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 18:12:45 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 20:14:14 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@
 # include <unistd.h>
 # include <stdint.h>
 
+//argumanları alıp doğru sayıda geldiğini kontrol ettik
+// gelen arguman sayısıyla philo oluşturduk
+//her philo ile thread oluşturduk
+//her philonun yemeğe müsait olup olmadığının kontrolü yapılmalı
+//bunun için sağı ve solundaki çatallar kontrol edilmeli
+//philonun eat think ve sleep planlaması yapılmalı
+//sıra eat - sleep - think şeklinde
+// eat think sleep actlerini yaptık
+// philonun doğru zaman aralığında yemek yediği kontrol edilmeli
+// ölen bir philo olduğunda program  10 ms içersinde bitmeli
+
+typedef struct s_table t_table;
+
 typedef struct s_philo
 {
 	int			id;
@@ -29,11 +42,14 @@ typedef struct s_philo
 	int			thinking;
 	pthread_t	th;
 	int			timestamp;
+	t_table		*table;
 }	t_philo;
+
 
 typedef struct s_fork
 {
-	int	id;	
+	int	id;
+	int	is_being_used;
 }	t_fork;
 
 typedef struct s_table
@@ -48,6 +64,7 @@ typedef struct s_table
 	u_int64_t	start_time;
 }	t_table;
 
+
 //utils
 int	valid_int(const char *s);
 void	write_message(char *time,char *id, char* act);
@@ -58,6 +75,8 @@ void	ft_usleep(int milliseconds);
 void	ft_eat(t_philo *philo, t_table table);
 void	ft_think(t_philo *philo, t_table table);
 void	ft_sleep(t_philo *philo, t_table table);
+void	*live(void *philo);
+int	check_forks(t_philo philo, t_table table);
 
 //libft
 int	ft_atoi(const char *str);
