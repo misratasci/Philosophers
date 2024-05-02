@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:25:13 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 17:47:47 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:12:45 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,17 @@ typedef struct s_table
 
 //utils
 int	valid_int(const char *s);
+void	write_message(char *time,char *id, char* act);
+u_int64_t	get_time(void);
+void	ft_usleep(int milliseconds);
+
+//actions
+void	ft_eat(t_philo *philo, t_table table);
+void	ft_think(t_philo *philo, t_table table);
+void	ft_sleep(t_philo *philo, t_table table);
 
 //libft
 int	ft_atoi(const char *str);
 char	*ft_itoa(int n);
-void	write_message(char *time,char *id, char* act);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:41:46 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 17:40:05 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:12:39 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,18 @@ void	write_message(char *time,char *id, char* act)
 	write(1, id, ft_strlen(id));
 	write(1, " ", 1);
 	write(1, act, ft_strlen(act));
+}
+
+u_int64_t	get_time(void)
+{
+	struct timeval tv;
+
+	if (gettimeofday(&tv, NULL))
+		return (-1);
+	return (tv.tv_sec * (u_int64_t)1000 + tv.tv_usec / (u_int64_t)1000);
+}
+
+void	ft_usleep(int milliseconds)
+{
+	usleep(milliseconds * 1000);
 }
