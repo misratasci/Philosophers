@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 20:13:41 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 16:54:06 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	philo_init(t_philo *philo, t_table *table, int id)
 static void	fork_init(t_fork *fork, int id)
 {
 	fork->id = id;
-	fork->is_being_used = 0;
+	pthread_mutex_init(&fork->lock, NULL);
 }
 
 static void	table_init(t_table *table, int argc, char **argv)
