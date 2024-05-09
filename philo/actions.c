@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:51:28 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/09 16:59:18 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 17:33:09 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	ft_take_fork(t_philo *philo, t_table table)
 		fork2 = &(table.forks[philo->id - 1]);
 
 	pthread_mutex_lock(&fork1->lock);
+	printf("couldn't lock\n");
 	pthread_mutex_lock(&fork2->lock);
+	printf("couldn't lock\n");
 }
 
 void	ft_leave_fork(t_philo *philo, t_table table)
