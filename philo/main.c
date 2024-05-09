@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/09 16:54:06 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 17:14:21 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	table_init(t_table *table, int argc, char **argv)
 	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->philo_no);
 	if (!(table->philos))
 		return ;
+	table->start_time = get_time();
 	i = 0;
 	while (i < table->philo_no)
 	{
@@ -68,7 +69,6 @@ static void	table_init(t_table *table, int argc, char **argv)
 	table->philo_eat_no = 0;
 	if (argc == 6)
 		table->philo_eat_no = ft_atoi(argv[5]);
-	table->start_time = get_time();
 }
 
 
