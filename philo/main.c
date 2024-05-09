@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/09 17:14:21 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 17:47:34 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void	philo_init(t_philo *philo, t_table *table, int id)
 	philo->eating = 1;
 	philo->sleeping = 0;
 	philo->thinking = 0;
-	pthread_create(&(philo->th), NULL, live, philo);
 	philo->timestamp = 0;
 	philo->table = table;
+	pthread_create(&(philo->th), NULL, live, philo);
 }
 
 static void	fork_init(t_fork *fork, int id)
@@ -56,6 +56,12 @@ static void	table_init(t_table *table, int argc, char **argv)
 	if (!(table->philos))
 		return ;
 	table->start_time = get_time();
+	table->time_to_die = ft_atoi(argv[2]);
+	table->time_to_eat = ft_atoi(argv[3]);
+	table->time_to_sleep = ft_atoi(argv[4]);
+	table->philo_eat_no = 0;
+	if (argc == 6)
+		table->philo_eat_no = ft_atoi(argv[5]);
 	i = 0;
 	while (i < table->philo_no)
 	{
@@ -63,12 +69,6 @@ static void	table_init(t_table *table, int argc, char **argv)
 		fork_init(&(table->forks[i]), i);
 		i++;
 	}
-	table->time_to_die = ft_atoi(argv[2]);
-	table->time_to_eat = ft_atoi(argv[3]);
-	table->time_to_sleep = ft_atoi(argv[4]);
-	table->philo_eat_no = 0;
-	if (argc == 6)
-		table->philo_eat_no = ft_atoi(argv[5]);
 }
 
 

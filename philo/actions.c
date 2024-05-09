@@ -6,13 +6,13 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:51:28 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/09 17:33:09 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 17:44:36 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_take_fork(t_philo *philo, t_table table)
+int	ft_take_fork(t_philo *philo, t_table table)
 {
 	t_fork	*fork1;
 	t_fork	*fork2;
@@ -23,10 +23,11 @@ void	ft_take_fork(t_philo *philo, t_table table)
 	else
 		fork2 = &(table.forks[philo->id - 1]);
 
-	pthread_mutex_lock(&fork1->lock);
-	printf("couldn't lock\n");
-	pthread_mutex_lock(&fork2->lock);
-	printf("couldn't lock\n");
+	if (pthread_mutex_lock(&fork1->lock) != 0)
+		return (1);
+	if (pthread_mutex_lock(&fork2->lock) != 0)
+		return (1);
+	return (0);
 }
 
 void	ft_leave_fork(t_philo *philo, t_table table)
@@ -53,7 +54,7 @@ void	ft_eat(t_philo *philo, t_table table)
 void	ft_think(t_philo *philo, t_table table)
 {
 	write_message(ft_itoa(get_time() - table.start_time), ft_itoa(philo->id), "is thinking\n");
-	//ft_usleep(ne kadar düşünecek daha bilmiyoruz);
+	ft_usleep(table.time_to_eat);
 }
 
 void	ft_sleep(t_philo *philo, t_table table)
@@ -67,7 +68,8 @@ void	*live(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	ft_take_fork(philo, *(philo->table));
+	if (ft_take_fork(philo, *(philo->table)))
+		ft_think(philo, *(philo->table));
 	ft_eat(philo, *(philo->table));
 	ft_leave_fork(philo, *(philo->table));
 	return (arg);
