@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/09 17:47:34 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:15:01 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	philo_init(t_philo *philo, t_table *table, int id)
 	philo->thinking = 0;
 	philo->timestamp = 0;
 	philo->table = table;
+	//printf("%s ,%d th created\n",ft_itoa(get_time() - table->start_time) , philo->id);
 	pthread_create(&(philo->th), NULL, live, philo);
 }
 
@@ -65,8 +66,8 @@ static void	table_init(t_table *table, int argc, char **argv)
 	i = 0;
 	while (i < table->philo_no)
 	{
-		philo_init(&(table->philos[i]), table, i);
-		fork_init(&(table->forks[i]), i);
+		philo_init(&(table->philos[i]), table, i + 1);
+		fork_init(&(table->forks[i]), i + 1);
 		i++;
 	}
 }
@@ -90,7 +91,7 @@ int	main(int argc, char **argv)
 {
 	t_table		table;
 	
-	if (!args_valid(argc, argv))
+	if (!args_valid(argc, argv)) //argümanların 0dan büyük olduğunu kontrol et
 		return (1);
 	table_init(&table, argc, argv);
 

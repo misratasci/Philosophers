@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:25:13 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 20:50:46 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:02:37 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ u_int64_t	get_time(void);
 void	ft_usleep(int milliseconds);
 
 //actions
-void	ft_eat(t_philo *philo, t_table table);
+void	ft_eat(t_philo *philo);
 void	ft_think(t_philo *philo, t_table table);
 void	ft_sleep(t_philo *philo, t_table table);
 void	*live(void *philo);

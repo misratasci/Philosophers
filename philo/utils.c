@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:41:46 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 18:12:39 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:39:27 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,13 @@ int	valid_int(const char *s)
 
 void	write_message(char *time,char *id, char* act)
 {
-	write(1, time, ft_strlen(time));
-	write(1, " ", 1);
-	write(1, id, ft_strlen(id));
-	write(1, " ", 1);
-	write(1, act, ft_strlen(act));
+	// write(1, time, ft_strlen(time));
+	// write(1, " ", 1);
+	// write(1, id, ft_strlen(id));
+	// write(1, " ", 1);
+	// write(1, act, ft_strlen(act));
+
+	printf("%s %s %s\n",time,id,act);
 }
 
 u_int64_t	get_time(void)
