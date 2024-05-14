@@ -81,8 +81,8 @@ void	write_message(char *time,char *id, char* act)
 	// write(1, id, ft_strlen(id));
 	// write(1, " ", 1);
 	// write(1, act, ft_strlen(act));
-
-	printf("%s %s %s",time,id,act);
+	if (philo->table->philo_die != 1)	
+		printf("%s %s %s",time,id,act);
 }
 
 u_int64_t	get_time(void)

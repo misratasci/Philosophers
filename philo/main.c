@@ -6,7 +6,7 @@
 /*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/14 19:23:50 by sessiz           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:42:34 by sessiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	table_init(t_table *table, int argc, char **argv)
 	table->time_to_sleep = ft_atoi(argv[4]);
 	table->philo_eat_no = 0;
 	table->philo_die = 0;
-	//pthread_mutex_init(&table->deadlock, NULL);
+	pthread_mutex_init(&table->deadlock, NULL);
 	if (argc == 6)
 		table->philo_eat_no = ft_atoi(argv[5]);
 	i = 0;
@@ -78,13 +78,22 @@ static void	table_init(t_table *table, int argc, char **argv)
 void	table_destroy(t_table *table)
 {
 	int	i;
-
+	
 	i = 0;
+	pthread_mutex_unlock(&table->deadlock);
 	while (i < table->philo_no)
 	{
 		pthread_join((table->philos[i]).th, NULL);
 		i++;
 	}
+	i=0;
+	while (i < table->philo_no)
+	{
+		pthread_mutex_destroy(&(table->philos[i]).lock);
+		pthread_mutex_destroy(&(table->forks[i]).lock);
+		i++;
+	}
+	pthread_mutex_destroy(&table->deadlock);
 	free(table->philos);
 	free(table->forks);
 }
