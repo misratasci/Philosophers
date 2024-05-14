@@ -1,6 +1,6 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 RM = rm -rf
 SRCS = main.c utils.c ft_atoi.c ft_itoa.c actions.c
 OBJ = $(SRCS:.c=.o)

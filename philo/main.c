@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:24:38 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/09 19:15:01 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/14 19:23:50 by sessiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static void	philo_init(t_philo *philo, t_table *table, int id)
 {
 	philo->id = id;
 	philo->dead = 0;
-	philo->eating = 1;
-	philo->sleeping = 0;
+	philo->eating = 0;
+	philo->eat_count = 0;
 	philo->thinking = 0;
-	philo->timestamp = 0;
+	philo->last_eat = table->start_time;
 	philo->table = table;
-	//printf("%s ,%d th created\n",ft_itoa(get_time() - table->start_time) , philo->id);
+	pthread_mutex_init(&philo->lock, NULL);
 	pthread_create(&(philo->th), NULL, live, philo);
 }
 
@@ -61,6 +61,8 @@ static void	table_init(t_table *table, int argc, char **argv)
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	table->philo_eat_no = 0;
+	table->philo_die = 0;
+	//pthread_mutex_init(&table->deadlock, NULL);
 	if (argc == 6)
 		table->philo_eat_no = ft_atoi(argv[5]);
 	i = 0;
@@ -94,6 +96,5 @@ int	main(int argc, char **argv)
 	if (!args_valid(argc, argv)) //argümanların 0dan büyük olduğunu kontrol et
 		return (1);
 	table_init(&table, argc, argv);
-
 	table_destroy(&table);
 }

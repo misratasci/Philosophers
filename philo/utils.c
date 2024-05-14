@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:41:46 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/09 18:39:27 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/09 23:32:53 by sessiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	write_message(char *time,char *id, char* act)
 	// write(1, " ", 1);
 	// write(1, act, ft_strlen(act));
 
-	printf("%s %s %s\n",time,id,act);
+	printf("%s %s %s",time,id,act);
 }
 
 u_int64_t	get_time(void)
