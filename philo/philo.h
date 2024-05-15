@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 14:25:13 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 20:50:46 by mitasci          ###   ########.fr       */
+/*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
+/*   Updated: 2024/05/15 19:24:09 by sessiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,66 +20,35 @@
 # include <unistd.h>
 # include <stdint.h>
 
-//argumanları alıp doğru sayıda geldiğini kontrol ettik
-// gelen arguman sayısıyla philo oluşturduk
-//her philo ile thread oluşturduk
-//her philonun yemeğe müsait olup olmadığının kontrolü yapılmalı
-//bunun için sağı ve solundaki çatallar kontrol edilmeli
-//philonun eat think ve sleep planlaması yapılmalı
-//sıra eat - sleep - think şeklinde
-// eat think sleep actlerini yaptık
-// philonun doğru zaman aralığında yemek yediği kontrol edilmeli
-// ölen bir philo olduğunda program  10 ms içersinde bitmeli
-
-typedef struct s_table t_table;
+typedef unsigned long long	t_time;
 
 typedef struct s_philo
 {
-	int			id;
-	int			dead;
-	int			sleeping;
-	int			eating;
-	int			thinking;
-	pthread_t	th;
-	int			timestamp;
-	t_table		*table;
-}	t_philo;
+	int						id;
+	int						must_eat;
+	int						num_of_philo;
+	int						num_of_meals;
+	int						*check_dead;
+	t_time					time_to_die;
+	t_time					time_to_eat;
+	t_time					time_to_sleep;
+	t_time					start_time;
+	t_time					last_meal;
+	pthread_t				thread;
+	pthread_mutex_t			*death;
+	pthread_mutex_t			last;
+	pthread_mutex_t			total;
+	pthread_mutex_t			*fork;
+}							t_philo;
 
 
-typedef struct s_fork
-{
-	int				id;
-	pthread_mutex_t	lock;
-}	t_fork;
-
-typedef struct s_table
-{
-	int		philo_no;
-	t_philo	*philos;
-	t_fork	*forks;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		philo_eat_no;
-	u_int64_t	start_time;
-}	t_table;
-
-
-//utils
-int	valid_int(const char *s);
-void	write_message(char *time,char *id, char* act);
-u_int64_t	get_time(void);
-void	ft_usleep(int milliseconds);
-
-//actions
-void	ft_eat(t_philo *philo, t_table table);
-void	ft_think(t_philo *philo, t_table table);
-void	ft_sleep(t_philo *philo, t_table table);
-void	*live(void *philo);
-int	check_forks(t_philo philo, t_table table);
-
-//libft
-int	ft_atoi(const char *str);
-char	*ft_itoa(int n);
+static int	ft_isdig(int c);
+int			ft_atoi(const char *str);
+char		*ft_itoa(int n);
+t_time		ft_get_time_of_ms(void);
+int			table_init(t_philo *philo, int ac, char **av, int *check_dead);
+void		*table_create(t_philo *philo);
+void		*table_destroy(t_philo *philo, pthread_mutex_t *forks);
+void 		*ft_live(void *args);
 
 #endif

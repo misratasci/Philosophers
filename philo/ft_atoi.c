@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 11:38:10 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/02 14:57:17 by mitasci          ###   ########.fr       */
+/*   Created: 2024/05/15 17:20:20 by sessiz            #+#    #+#             */
+/*   Updated: 2024/05/15 17:24:46 by sessiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 static int	is_whitespace(int c)
 {
 	return ((c >= 9 && c <= 13) || c == ' ');
-}
-
-static int	ft_isdig(int c)
-{
-	return (c >= 48 && c <= 57);
 }
 
 int	ft_atoi(const char *str)
