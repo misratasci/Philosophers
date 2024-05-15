@@ -6,7 +6,7 @@
 /*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:51:28 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/14 20:46:52 by sessiz           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:52:34 by sessiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	*live(void *arg)
 {
 	t_philo *philo;
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		ft_usleep(200);
 	while (philo->table->philo_die == 0)
 	{
 		pthread_mutex_lock(&philo->table->deadlock);
