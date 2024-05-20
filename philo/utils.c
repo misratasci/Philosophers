@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 15:43:49 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:55:27 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ t_time	ft_get_time_of_ms(void)
 	t_time			time;
 
 	gettimeofday(&tp, NULL);
-	time = tp.tv_sec * 1000 + tp.tv_usec / 1000;
+	time = tp.tv_sec * 1000LL + tp.tv_usec / 1000LL;
 	return (time);
+}
+
+void	ft_msleep(t_time time)
+{
+	usleep(time * 1000);
 }

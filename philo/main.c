@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:10:00 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 16:25:47 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 19:52:53 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,24 @@ int args_valid(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_philo			**philos;
-	//pthread_mutex_t	*forks;
+	pthread_mutex_t	*forks;
 	//pthread_mutex_t	death;
 	//int				check_dead;
-	
+
 	if (!args_valid(argc, argv))
 		return (1);
 	if (ft_atoi(argv[1]) == 0)
 		return (1);
 	
 	philos = (t_philo **)malloc(sizeof(t_philo *));
-	table_init(philos, argc, argv);
+	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	printf("ft_atoi(argv[1]): %d\n", ft_atoi(argv[1]));
+	if (!forks || !philos)
+    {
+        printf("Failed to allocate\n");
+        return(1);
+    }
+	table_init(philos, argc, argv, forks);
 	table_create(philos);
-	//table_destroy(&philo, forks);
+	//table_destroy(philos, forks);
 }

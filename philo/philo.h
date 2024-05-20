@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 16:30:17 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:55:36 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ typedef struct s_philo
 	t_time					start_time;
 	t_time					last_meal;
 	pthread_t				thread;
-	pthread_mutex_t			*death;
-	pthread_mutex_t			last;
-	pthread_mutex_t			total;
-	pthread_mutex_t			rfork;
-	pthread_mutex_t			lfork;
+	//pthread_mutex_t			*death;
+	//pthread_mutex_t			last;
+	//pthread_mutex_t			total;
+	pthread_mutex_t			*rfork;
+	pthread_mutex_t			*lfork;
 }							t_philo;
 
 
@@ -47,9 +47,10 @@ int			ft_isdig(int c);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
 t_time		ft_get_time_of_ms(void);
-void		table_init(t_philo **philos, int ac, char **av);
+void		table_init(t_philo **philos, int ac, char **av, pthread_mutex_t *forks);
 void		table_create(t_philo **philos);
-void		table_destroy(t_philo *philo, pthread_mutex_t *forks);
+void		table_destroy(t_philo **philos, pthread_mutex_t *forks);
 void 		*ft_live(void *args);
+void		ft_msleep(t_time time);
 
 #endif
