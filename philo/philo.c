@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/15 20:23:01 by sessiz           ###   ########.fr       */
+/*   Updated: 2024/05/20 16:26:13 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 
 void *ft_live(void *args)
 {
-	t_philo *philo;
+	t_philo **philos;
 	
-	philo = (t_philo *)args;
+	philos = (t_philo **)args;
 	printf("I'm alive\n");
+	return (NULL);
 }
 
-void *ft_take_forks(t_philo *philo)
+void ft_take_forks(t_philo *philo)
 {
 	
 	pthread_mutex_lock(philo->fork);
 	pthread_mutex_lock(philo->fork);
 }
 
-void *ft_eat(t_philo *philo)
+void ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->total);
 	pthread_mutex_lock(&philo->last);
@@ -37,7 +38,7 @@ void *ft_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->total);
 }
 
-void *ft_death_check(t_philo *philo)
+void ft_death_check(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->last);
 	if(ft_get_time_of_ms() - philo->last_meal > philo->time_to_die)

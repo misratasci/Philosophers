@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/15 19:24:09 by sessiz           ###   ########.fr       */
+/*   Updated: 2024/05/20 16:24:39 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ typedef struct s_philo
 }							t_philo;
 
 
-static int	ft_isdig(int c);
+int			ft_isdig(int c);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
 t_time		ft_get_time_of_ms(void);
-int			table_init(t_philo *philo, int ac, char **av, int *check_dead);
-void		*table_create(t_philo *philo);
-void		*table_destroy(t_philo *philo, pthread_mutex_t *forks);
+void		table_init(t_philo **philos, int ac, char **av);
+void		table_create(t_philo **philos);
+void		table_destroy(t_philo *philo, pthread_mutex_t *forks);
 void 		*ft_live(void *args);
 
 #endif

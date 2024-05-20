@@ -3,62 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessiz <sessiz@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/15 19:37:20 by sessiz           ###   ########.fr       */
+/*   Updated: 2024/05/20 16:26:34 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	table_init(t_philo *philo, int ac, char **av, int *check_dead)
+void	table_init(t_philo **philos, int ac, char **av)
 {
 	int	i;
+	int	len;
 
+	len = ft_atoi(av[1]);
 	i = -1;
-	while (++i < ft_atoi(av[1]))
+	while (++i < len)
 	{
-		philo[i].id = i + 1;
-		philo[i].num_of_philo = ft_atoi(av[1]);
-		philo[i].time_to_die = ft_atoi(av[2]);
-		philo[i].time_to_eat = ft_atoi(av[3]);
-		philo[i].time_to_sleep = ft_atoi(av[4]);
+		philos[i] = (t_philo *)malloc(sizeof(t_philo) * len);
+		philos[i]->id = i + 1;
+		philos[i]->num_of_philo = len;
+		philos[i]->time_to_die = ft_atoi(av[2]);
+		philos[i]->time_to_eat = ft_atoi(av[3]);
+		philos[i]->time_to_sleep = ft_atoi(av[4]);
 		if (ac == 6)
-			philo[i].must_eat = ft_atoi(av[5]);
+			philos[i]->must_eat = ft_atoi(av[5]);
 		else
-			philo[i].must_eat = -1;
-		philo[i].last_meal = ft_get_time_of_ms();
-		philo[i].start_time = ft_get_time_of_ms();
-		philo[i].num_of_meals = 0;
-		philo[i].check_dead = check_dead;
-		pthread_mutex_init(&philo[i].last, NULL);
-		pthread_mutex_init(&philo[i].total, NULL);
+			philos[i]->must_eat = -1;
+		philos[i]->last_meal = ft_get_time_of_ms();
+		philos[i]->start_time = ft_get_time_of_ms();
+		philos[i]->num_of_meals = 0;
+		philos[i]->check_dead = 0;
+		pthread_mutex_init(&philos[i]->last, NULL);
+		pthread_mutex_init(&philos[i]->total, NULL);
 	}
-	return (0);
 }
 
-void	*table_create(t_philo *philo)
+void	table_create(t_philo **philos)
 {
 	int i;
 
 	i = 0;
-	while (i < philo->num_of_philo)
+	while (i < philos[0]->num_of_philo)
 	{
-		pthread_create(&philo[i].thread, NULL, ft_live, &philo[i]);
+		pthread_create(&philos[i]->thread, NULL, ft_live, philos);
 		usleep(60);
 		i++;
 	}
+	/*
 	i = 0;
-	
 	while (i < philo->num_of_philo)
 	{
 		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
+	*/
 }
 
-void	*table_destroy(t_philo *philo, pthread_mutex_t *forks)
+void	table_destroy(t_philo *philo, pthread_mutex_t *forks)
 {
 	int i;
 
@@ -75,5 +78,5 @@ void	*table_destroy(t_philo *philo, pthread_mutex_t *forks)
 		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&philo->death);
+	pthread_mutex_destroy(philo->death);
 }
