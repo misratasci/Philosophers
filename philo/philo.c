@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 19:46:18 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:05:08 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void ft_take_forks(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		int a = pthread_mutex_lock(philo->lfork);
-		printf("asdfasdf %d\n", a);
+		printf("a %d\n", a);
 			
 		printf("%llu %d has taken a left fork\n", ft_get_time_of_ms() - philo->start_time, philo->id);
 		printf("%llu %d left fork address: %p\n", ft_get_time_of_ms() - philo->start_time, philo->id, (philo->lfork));
-		pthread_mutex_lock(philo->rfork);
+		int b = pthread_mutex_lock(philo->rfork);
+		printf("b %d\n", b);
 		printf("%llu %d has taken a right fork\n", ft_get_time_of_ms() - philo->start_time, philo->id);
 		printf("%llu %d right fork address: %p\n", ft_get_time_of_ms() - philo->start_time, philo->id, (philo->rfork));
 	}

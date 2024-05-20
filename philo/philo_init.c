@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 19:51:51 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:04:08 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	table_init(t_philo **philos, int ac, char **av, pthread_mutex_t *forks)
 {
 	int	i;
 	int	len;
+	pthread_mutex_t	*last;
 
+	last = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	len = ft_atoi(av[1]);
 	i = -1;
 	while (++i < len)
@@ -40,7 +42,8 @@ void	table_init(t_philo **philos, int ac, char **av, pthread_mutex_t *forks)
 		philos[i]->start_time = ft_get_time_of_ms();
 		philos[i]->num_of_meals = 0;
 		philos[i]->check_dead = 0;
-		//pthread_mutex_init(&philos[i]->last, NULL);
+		//philos[i]->last = last;
+		//pthread_mutex_init(last, NULL);
 		//pthread_mutex_init(&philos[i]->total, NULL);
 		philos[i]->lfork = &forks[i];
 		philos[i]->rfork = &forks[(i + 1) % len];
