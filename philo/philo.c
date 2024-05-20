@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 16:26:13 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:44:15 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void *ft_live(void *args)
 {
-	t_philo **philos;
+	t_philo *philo;
 	
-	philos = (t_philo **)args;
+	philo = (t_philo *)args;
 	printf("I'm alive\n");
+	
 	return (NULL);
 }
 
 void ft_take_forks(t_philo *philo)
 {
-	
-	pthread_mutex_lock(philo->fork);
-	pthread_mutex_lock(philo->fork);
+	pthread_mutex_lock(&philo->lfork);
+	pthread_mutex_lock(&philo->rfork);
 }
 
 void ft_eat(t_philo *philo)

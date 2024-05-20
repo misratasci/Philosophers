@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 16:26:34 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:43:40 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	table_init(t_philo **philos, int ac, char **av)
 {
 	int	i;
 	int	len;
+	pthread_mutex_t *forks;
 
 	len = ft_atoi(av[1]);
+	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * len);
 	i = -1;
 	while (++i < len)
 	{
@@ -37,6 +39,9 @@ void	table_init(t_philo **philos, int ac, char **av)
 		philos[i]->check_dead = 0;
 		pthread_mutex_init(&philos[i]->last, NULL);
 		pthread_mutex_init(&philos[i]->total, NULL);
+		philos[i]->lfork = forks[i];
+		philos[i]->rfork = forks[(i + 1) % 5];
+		pthread_mutex_init(&forks[i], NULL);
 	}
 }
 
@@ -47,7 +52,7 @@ void	table_create(t_philo **philos)
 	i = 0;
 	while (i < philos[0]->num_of_philo)
 	{
-		pthread_create(&philos[i]->thread, NULL, ft_live, philos);
+		pthread_create(&philos[i]->thread, NULL, ft_live, philos[i]);
 		usleep(60);
 		i++;
 	}

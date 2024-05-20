@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 16:24:39 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/20 16:30:17 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef struct s_philo
 	pthread_mutex_t			*death;
 	pthread_mutex_t			last;
 	pthread_mutex_t			total;
-	pthread_mutex_t			*fork;
+	pthread_mutex_t			rfork;
+	pthread_mutex_t			lfork;
 }							t_philo;
 
 
