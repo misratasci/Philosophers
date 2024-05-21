@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/21 15:26:59 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/21 15:30:17 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ void	ft_sleep(t_philo *philo)
 
 int ft_death_check(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->table->check_dead);
 	if(ft_get_time_of_ms() - philo->last_meal > philo->table->time_to_die)
 	{
 		printf("%llu %d died\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);	
 		return (1);
 	}
+	pthread_mutex_unlock(&philo->table->check_dead);
 	return (0);
 }
 
@@ -68,16 +70,12 @@ void *ft_live(void *args)
 	t_philo	*philo;
 	
 	philo = (t_philo *)args;
-	//if (philo->id % 2 == 1)
-	//	msleep(philo->time_to_eat);
 	while (1)
 	{	
 		if (ft_death_check(philo))
 			break;
 		ft_eat(philo);
 		ft_sleep(philo);
-		
 	}
-	
 	return (NULL);
 }

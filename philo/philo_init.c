@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/21 15:24:17 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/21 15:29:05 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	table_init(t_table	*table, int ac, char **av)
 		table->must_eat = ft_atoi(av[5]);
 	else
 		table->must_eat = -1;
-	table->check_dead = 0;
+	pthread_mutex_init(&table->check_dead, NULL);
 	table->start_time = ft_get_time_of_ms();
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);

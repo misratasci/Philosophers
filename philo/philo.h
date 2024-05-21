@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/21 15:14:43 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/21 15:28:39 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ typedef struct s_table
 	t_philo			**philos;
 	int				must_eat;
 	int				num_of_meals;
-	int				check_dead;
 	t_time			time_to_die;
 	t_time			time_to_eat;
 	t_time			time_to_sleep;
 	t_time			start_time;
+	pthread_mutex_t	check_dead;
 	pthread_mutex_t	*forks;
 }	t_table;
 
