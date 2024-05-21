@@ -6,91 +6,77 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 20:04:08 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/21 15:24:17 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	table_init(t_philo **philos, int ac, char **av, pthread_mutex_t *forks)
+void	table_init(t_table	*table, int ac, char **av)
 {
 	int	i;
-	int	len;
-	pthread_mutex_t	*last;
-
-	last = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	len = ft_atoi(av[1]);
+	table->num_philo = ft_atoi(av[1]);
+	table->philos = (t_philo **)malloc(sizeof(t_philo *) * table->num_philo);
+	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->num_philo);
+	if (!table->philos || !table->forks)
+	{
+		printf("Failed to allocate\n");
+		return ;
+	}
+	table->num_of_meals = 0;
+	if (ac == 6)
+		table->must_eat = ft_atoi(av[5]);
+	else
+		table->must_eat = -1;
+	table->check_dead = 0;
+	table->start_time = ft_get_time_of_ms();
+	table->time_to_die = ft_atoi(av[2]);
+	table->time_to_eat = ft_atoi(av[3]);
+	table->time_to_sleep = ft_atoi(av[4]);
 	i = -1;
-	while (++i < len)
+	while (++i < table->num_philo)
 	{
-		philos[i] = (t_philo *)malloc(sizeof(t_philo) * len);
-		if (!philos[i])
-		{
-			printf("Failed to allocate philos\n");
-			return ;
-		}
-		philos[i]->id = i + 1;
-		philos[i]->num_of_philo = len;
-		philos[i]->time_to_die = ft_atoi(av[2]);
-		philos[i]->time_to_eat = ft_atoi(av[3]);
-		philos[i]->time_to_sleep = ft_atoi(av[4]);
-		if (ac == 6)
-			philos[i]->must_eat = ft_atoi(av[5]);
-		else
-			philos[i]->must_eat = -1;
-		philos[i]->last_meal = ft_get_time_of_ms();
-		philos[i]->start_time = ft_get_time_of_ms();
-		philos[i]->num_of_meals = 0;
-		philos[i]->check_dead = 0;
-		//philos[i]->last = last;
-		//pthread_mutex_init(last, NULL);
-		//pthread_mutex_init(&philos[i]->total, NULL);
-		philos[i]->lfork = &forks[i];
-		philos[i]->rfork = &forks[(i + 1) % len];
-		pthread_mutex_init(&forks[i], NULL);
-		//int b =pthread_mutex_lock(&forks[i]);
-		//printf("%p %d %d\n", &forks[i], a, b);
+		philo_init(table, i);
+		pthread_mutex_init(&table->forks[i], NULL);
 	}
 }
 
-void	table_create(t_philo **philos)
+void	philo_init(t_table *table, int i)
+{
+	table->philos[i] = (t_philo *)malloc(sizeof(t_philo));
+	table->philos[i]->id = i + 1;
+	table->philos[i]->last_meal = table->start_time;
+	table->philos[i]->lfork = &table->forks[i];
+	table->philos[i]->rfork = &table->forks[(i + 1) % table->num_philo];
+	table->philos[i]->table = table;
+}
+
+void	create_philos(t_table *table)
 {
 	int i;
 
 	i = 0;
-	while (i < philos[0]->num_of_philo)
+	while (i < table->num_philo)
 	{
-		pthread_create(&philos[i]->thread, NULL, ft_live, philos[i]);
-		//usleep(60);
+		pthread_create(&table->philos[i]->thread, NULL, ft_live, table->philos[i]);
 		i++;
 	}
-	
+
 	i = 0;
-	while (i < philos[0]->num_of_philo)
+	while (i < table->num_philo)
 	{
-		pthread_join(philos[i]->thread, NULL);
+		pthread_join(table->philos[i]->thread, NULL);
 		i++;
 	}
-	
 }
 
-void	table_destroy(t_philo **philos, pthread_mutex_t *forks)
+void	table_destroy(t_table *table)
 {
 	int i;
-	/*
 	i = 0;
-	while (i < philos[0]->num_of_philo)
+	while (i < table->num_philo)
 	{
-		pthread_mutex_destroy(&philos[i]->last);
-		pthread_mutex_destroy(&philos[i]->total);
+		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
-	*/
-	i = 0;
-	while (i < philos[0]->num_of_philo)
-	{
-		pthread_mutex_destroy(&forks[i]);
-		i++;
-	}
-	//pthread_mutex_destroy(philos->death);
 }

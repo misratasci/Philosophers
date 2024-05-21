@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/20 20:04:12 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/21 15:14:43 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,42 @@
 
 typedef unsigned long long	t_time;
 
+typedef struct s_table t_table;
+
 typedef struct s_philo
 {
 	int						id;
-	int						must_eat;
-	int						num_of_philo;
-	int						num_of_meals;
-	int						*check_dead;
-	t_time					time_to_die;
-	t_time					time_to_eat;
-	t_time					time_to_sleep;
-	t_time					start_time;
 	t_time					last_meal;
 	pthread_t				thread;
-	//pthread_mutex_t			*death;
-	//pthread_mutex_t			*last;
-	//pthread_mutex_t			total;
 	pthread_mutex_t			*rfork;
 	pthread_mutex_t			*lfork;
+	t_table					*table;
 }							t_philo;
 
+typedef struct s_table
+{
+	int				num_philo;
+	t_philo			**philos;
+	int				must_eat;
+	int				num_of_meals;
+	int				check_dead;
+	t_time			time_to_die;
+	t_time			time_to_eat;
+	t_time			time_to_sleep;
+	t_time			start_time;
+	pthread_mutex_t	*forks;
+}	t_table;
 
-int			ft_isdig(int c);
-int			ft_atoi(const char *str);
-char		*ft_itoa(int n);
-t_time		ft_get_time_of_ms(void);
-void		table_init(t_philo **philos, int ac, char **av, pthread_mutex_t *forks);
-void		table_create(t_philo **philos);
-void		table_destroy(t_philo **philos, pthread_mutex_t *forks);
-void 		*ft_live(void *args);
-void		ft_msleep(t_time time);
+
+void	table_init(t_table	*table, int ac, char **av);
+void	philo_init(t_table *table, int i);
+void	create_philos(t_table *table);
+void	table_destroy(t_table *table);
+int		ft_isdig(int c);
+int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
+t_time	ft_get_time_of_ms(void);
+void	*ft_live(void *args);
+void	ft_msleep(t_time time);
 
 #endif
