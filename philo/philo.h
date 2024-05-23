@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/21 15:28:39 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/23 15:29:37 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ typedef struct s_table
 	t_time			time_to_eat;
 	t_time			time_to_sleep;
 	t_time			start_time;
+	int				someone_died;
 	pthread_mutex_t	check_dead;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print;
 }	t_table;
 
 

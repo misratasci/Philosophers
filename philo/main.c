@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:10:00 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/21 15:15:16 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/23 13:23:01 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int args_valid(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Error: .\n");
+		printf("Error: Wrong number of arguments\n");
 		return (0);
 	}
 	i = 1;
@@ -30,7 +30,7 @@ int args_valid(int argc, char **argv)
 		{
 		if (!ft_isdig(argv[i][j]) && argv[i][0] != '+')
 			{
-				printf("Error: Arguments must be positive integers.\n");
+				printf("Error: Arguments must be positive integers\n");
 				return (0);
 			}
 			j++;
