@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 13:50:16 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 13:58:33 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,43 +25,54 @@ void ft_death_check(t_philo *philo)
 	pthread_mutex_unlock(&philo->table->check_dead);
 }
 
+int	ft_dead_check(t_philo *philo)
+{
+	int dead;
+
+    pthread_mutex_lock(&philo->table->check_dead);
+    dead = philo->table->someone_died;
+    pthread_mutex_unlock(&philo->table->check_dead);
+    return (dead);
+}
+
 void ft_take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->table->check_dead);
-	if (philo->table->someone_died)
-	{
-		pthread_mutex_unlock(&philo->table->check_dead);
+	if (ft_dead_check(philo))
 		return ;
-	}
-	pthread_mutex_unlock(&philo->table->check_dead);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->lfork);
-		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
-		pthread_mutex_lock(&philo->table->check_dead);
-		if (philo->table->someone_died)
+		if (ft_dead_check(philo))
 		{
-			pthread_mutex_unlock(&philo->table->check_dead);
 			pthread_mutex_unlock(philo->lfork);
 			return ;
 		}
-		pthread_mutex_unlock(&philo->table->check_dead);
+		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 		pthread_mutex_lock(philo->rfork);
+		if (ft_dead_check(philo))
+        {
+            pthread_mutex_unlock(philo->rfork);
+            pthread_mutex_unlock(philo->lfork);
+            return ;
+        }
 		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 	}
 	else
 	{
 		pthread_mutex_lock(philo->rfork);
-		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
-		pthread_mutex_lock(&philo->table->check_dead);
-		if (philo->table->someone_died)
+		if (ft_dead_check(philo))
 		{
-			pthread_mutex_unlock(&philo->table->check_dead);
 			pthread_mutex_unlock(philo->rfork);
 			return ;
 		}
-		pthread_mutex_unlock(&philo->table->check_dead);
+		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 		pthread_mutex_lock(philo->lfork);
+		if (ft_dead_check(philo))
+        {
+            pthread_mutex_unlock(philo->rfork);
+            pthread_mutex_unlock(philo->lfork);
+            return ;
+        }
 		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 	}
 	return ;
@@ -76,15 +87,12 @@ void ft_leave_forks(t_philo *philo)
 void ft_eat(t_philo *philo)
 {
 	ft_death_check(philo);
-	pthread_mutex_lock(&philo->table->check_dead);
-	if (philo->table->someone_died)
-	{
-		pthread_mutex_unlock(&philo->table->check_dead);
+	if (ft_dead_check(philo))
 		return ;
-	}
-	pthread_mutex_unlock(&philo->table->check_dead);
 	ft_take_forks(philo);
 	philo->last_meal = ft_get_time_of_ms();
+	if (ft_dead_check(philo))
+		return ;
 	printf("%llu %d is eating\n", philo->last_meal - philo->table->start_time, philo->id);
 	ft_msleep(philo->table->time_to_eat);
 	ft_leave_forks(philo);
@@ -93,13 +101,8 @@ void ft_eat(t_philo *philo)
 void	ft_sleep(t_philo *philo)
 {
 	ft_death_check(philo);
-	pthread_mutex_lock(&philo->table->check_dead);
-	if (philo->table->someone_died)
-	{
-		pthread_mutex_unlock(&philo->table->check_dead);
+	if (ft_dead_check(philo))
 		return ;
-	}
-	pthread_mutex_unlock(&philo->table->check_dead);
 	printf("%llu %d is sleeping\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 	ft_msleep(philo->table->time_to_sleep);
 }
@@ -107,13 +110,8 @@ void	ft_sleep(t_philo *philo)
 void	ft_think(t_philo *philo)
 {
 	ft_death_check(philo);
-	pthread_mutex_lock(&philo->table->check_dead);
-	if (philo->table->someone_died)
-	{
-		pthread_mutex_unlock(&philo->table->check_dead);
+	if (ft_dead_check(philo))
 		return ;
-	}
-	pthread_mutex_unlock(&philo->table->check_dead);
 	printf("%llu %d is thinking\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 }
 
@@ -124,6 +122,8 @@ void *ft_live(void *args)
 	philo = (t_philo *)args;
 	while (!philo->table->someone_died)
 	{	
+		if (ft_dead_check(philo))
+		break ;
 		ft_eat(philo);
 		ft_sleep(philo);
 		ft_think(philo);
