@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:10:00 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 13:45:49 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 14:42:01 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	main(int argc, char **argv)
 		return (1);
 	if (ft_atoi(argv[1]) == 0)
 		return (1);
-
 	table_init(&table, argc, argv);
 	create_philos(&table);
 	table_destroy(&table);

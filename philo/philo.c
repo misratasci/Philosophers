@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 14:26:03 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 14:50:30 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void ft_meals_check(t_philo *philo)
 	i = 0;
 	while (i < philo->table->num_philo)
 	{
-		if (philo->table->philos[i]->meal_count < philo->table->must_eat)
+		if (philo->table->philos[i]->meal_count < philo->table->must_eat || philo->table->must_eat == -1)
 		{
 			all_philos_ate = 0;
 			break ;
@@ -102,6 +102,8 @@ void ft_take_forks(t_philo *philo)
 			return ;
 		}
 		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+		if (philo->table->num_philo == 1)
+			return ;
 		pthread_mutex_lock(philo->lfork);
 		if (ft_dead_check(philo) || ft_eaten_check(philo))
         {
@@ -160,7 +162,7 @@ void *ft_live(void *args)
 	t_philo	*philo;
 	
 	philo = (t_philo *)args;
-	while (!philo->table->someone_died)
+	while (1)
 	{	
 		if (ft_dead_check(philo) || ft_eaten_check(philo))
 		break ;
