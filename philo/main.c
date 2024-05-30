@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:10:00 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 14:42:01 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:01:52 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int args_valid(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_table			table;
+	t_table	table;
 	
 	if (!args_valid(argc, argv))
 		return (1);

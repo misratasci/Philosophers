@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 15:02:46 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:28:48 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void ft_death_check(t_philo *philo)
 	if(ft_get_time_of_ms() - philo->last_meal > philo->table->time_to_die && !philo->table->someone_died)
 	{
 		philo->table->someone_died = 1;
-		printf("%llu %d died\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "died");
+		//printf("%llu %d died\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 		pthread_mutex_unlock(&philo->table->check_dead);
 		return ;
 	}
@@ -83,7 +84,8 @@ void ft_take_forks(t_philo *philo)
 			pthread_mutex_unlock(philo->lfork);
 			return ;
 		}
-		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "has taken a fork");
+		//printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 		pthread_mutex_lock(philo->rfork);
 		if (ft_dead_check(philo) || ft_eaten_check(philo))
         {
@@ -91,7 +93,8 @@ void ft_take_forks(t_philo *philo)
             pthread_mutex_unlock(philo->lfork);
             return ;
         }
-		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "has taken a fork");
+		//printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 	}
 	else
 	{
@@ -101,7 +104,8 @@ void ft_take_forks(t_philo *philo)
 			pthread_mutex_unlock(philo->rfork);
 			return ;
 		}
-		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "has taken a fork");
+		//printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 		if (philo->table->num_philo == 1)
 		{
 			ft_msleep(philo->table->time_to_die);
@@ -115,7 +119,8 @@ void ft_take_forks(t_philo *philo)
             pthread_mutex_unlock(philo->lfork);
             return ;
         }
-		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "has taken a fork");
+		//printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 	}
 	return ;
 }
@@ -136,7 +141,8 @@ void ft_eat(t_philo *philo)
 	philo->last_meal = ft_get_time_of_ms();
 	if (ft_dead_check(philo) || ft_eaten_check(philo))
 		return ;
-	printf("%llu %d is eating\n", philo->last_meal - philo->table->start_time, philo->id);
+	ft_print(philo, philo->last_meal - philo->table->start_time, "is eating");
+	//printf("%llu %d is eating\n", philo->last_meal - philo->table->start_time, philo->id);
 	philo->meal_count++;
 	ft_msleep(philo->table->time_to_eat);
 	ft_leave_forks(philo);
@@ -148,7 +154,8 @@ void	ft_sleep(t_philo *philo)
 	ft_meals_check(philo);
 	if (ft_dead_check(philo) || ft_eaten_check(philo))
 		return ;
-	printf("%llu %d is sleeping\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+	ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "is sleeping");
+	//printf("%llu %d is sleeping\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 	ft_msleep(philo->table->time_to_sleep);
 }
 
@@ -158,7 +165,8 @@ void	ft_think(t_philo *philo)
 	ft_meals_check(philo);
 	if (ft_dead_check(philo) || ft_eaten_check(philo))
 		return ;
-	printf("%llu %d is thinking\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
+	ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "is thinking");
+	//printf("%llu %d is thinking\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 }
 
 void *ft_live(void *args)

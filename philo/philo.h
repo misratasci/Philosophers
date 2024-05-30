@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/05/30 14:20:05 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:15:56 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_table
 	pthread_mutex_t	check_dead;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meals;
+	pthread_mutex_t	print;
 }	t_table;
 
 
@@ -58,9 +59,13 @@ void	create_philos(t_table *table);
 void	table_destroy(t_table *table);
 int		ft_isdig(int c);
 int		ft_atoi(const char *str);
-char	*ft_itoa(int n);
+size_t	char_count(int n);
+size_t	char_count_time(time_t n);
+char	*ft_itoa(int n, size_t count);
+char	*ft_timetoa(t_time n, size_t count);
 t_time	ft_get_time_of_ms(void);
 void	*ft_live(void *args);
 void	ft_msleep(t_time time);
+void	ft_print(t_philo *philo, t_time time, char *str);
 
 #endif
