@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 14:50:30 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 15:02:46 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,11 @@ void ft_take_forks(t_philo *philo)
 		}
 		printf("%llu %d has taken a fork\n", ft_get_time_of_ms() - philo->table->start_time, philo->id);
 		if (philo->table->num_philo == 1)
+		{
+			ft_msleep(philo->table->time_to_die);
+			ft_death_check(philo);
 			return ;
+		}
 		pthread_mutex_lock(philo->lfork);
 		if (ft_dead_check(philo) || ft_eaten_check(philo))
         {
