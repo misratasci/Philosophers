@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 13:47:04 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/05/30 14:19:59 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ void	table_init(t_table	*table, int ac, char **av)
 		printf("Failed to allocate\n");
 		return ;
 	}
-	table->num_of_meals = 0;
 	if (ac == 6)
 		table->must_eat = ft_atoi(av[5]);
 	else
 		table->must_eat = -1;
 	pthread_mutex_init(&table->check_dead, NULL);
-	pthread_mutex_init(&table->print, NULL);
+	pthread_mutex_init(&table->meals, NULL);
 	table->start_time = ft_get_time_of_ms();
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
 	table->someone_died = 0;
+	table->max_meals_eaten = 0;
 	i = -1;
 	while (++i < table->num_philo)
 	{
@@ -51,6 +51,7 @@ void	philo_init(t_table *table, int i)
 	table->philos[i]->lfork = &table->forks[i];
 	table->philos[i]->rfork = &table->forks[(i + 1) % table->num_philo];
 	table->philos[i]->table = table;
+	table->philos[i]->meal_count = 0;
 }
 
 void	create_philos(t_table *table)
