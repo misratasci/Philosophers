@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/05 15:52:52 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:47:55 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,26 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
-void	ft_print(t_philo *philo, char *str)
+void	ft_print(t_philo *philo, t_time	time, char *str)
 {
 	size_t	count[2];
-	char	*s;
-	char	*s2;
-	t_time	time;
+	char	buffer[100];
+	int		i;
 	
-	count[1] = char_count(philo->id);
-	s2 = ft_itoa(philo->id, count[1]);
-	pthread_mutex_lock(&philo->table->print);
-	time = ft_get_time_of_ms() - philo->table->start_time;
 	count[0] = char_count_time(time);
-	s = ft_timetoa(time, count[0]);
-	write(STDOUT_FILENO, s, count[0]);
-	write(STDOUT_FILENO, " ", 1);
-	write(STDOUT_FILENO, s2, count[1]);
-	write(STDOUT_FILENO, " ", 1);
-	write(STDOUT_FILENO, str, ft_strlen(str));
-	write(STDOUT_FILENO, "\n", 1);
+	count[1] = char_count(philo->id);
+	ft_timetoa(buffer, 0, time, count[0]);
+	ft_itoa(buffer, count[0], philo->id, count[1]);
+	buffer[count[0] + 1 + count[1]] = ' ';
+	i = 0;
+	while (str[i])
+	{
+		buffer[count[0] + 1 + count[1] + 1 + i] = str[i];
+		i++;
+	}
+	buffer[count[0] + 1 + count[1] + 1 + i] = '\n';
+	buffer[count[0] + 1 + count[1] + 2 + i] = 0;
+	pthread_mutex_lock(&philo->table->print);
+	write(STDOUT_FILENO, buffer, count[0] + 1 + count[1] + 2 + i);
 	pthread_mutex_unlock(&philo->table->print);
-	free(s);
-	free(s2);
 }
