@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/06/05 15:13:27 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:53:11 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ char	*ft_timetoa(t_time n, size_t count);
 t_time	ft_get_time_of_ms(void);
 void	*ft_live(void *args);
 void	ft_msleep(t_time time);
-void	ft_print(t_philo *philo, t_time time, char *str);
+void	ft_print(t_philo *philo, char *str);
 
 #endif

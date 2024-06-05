@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/03 15:58:08 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:52:52 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
-void	ft_print(t_philo *philo, t_time time, char *str)
+void	ft_print(t_philo *philo, char *str)
 {
 	size_t	count[2];
 	char	*s;
 	char	*s2;
+	t_time	time;
 	
-	count[0] = char_count_time(time);
 	count[1] = char_count(philo->id);
 	s2 = ft_itoa(philo->id, count[1]);
 	pthread_mutex_lock(&philo->table->print);
-	s = ft_timetoa(ft_get_time_of_ms() - philo->table->start_time, count[0]);
+	time = ft_get_time_of_ms() - philo->table->start_time;
+	count[0] = char_count_time(time);
+	s = ft_timetoa(time, count[0]);
 	write(STDOUT_FILENO, s, count[0]);
 	write(STDOUT_FILENO, " ", 1);
 	write(STDOUT_FILENO, s2, count[1]);
