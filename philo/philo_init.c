@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/05 15:13:13 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:15:42 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,7 @@ void	table_destroy(t_table *table)
 		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&table->check_dead);
+	pthread_mutex_destroy(&table->meals);
+	pthread_mutex_destroy(&table->print);
 }
