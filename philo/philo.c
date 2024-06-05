@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/05 15:54:08 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:56:11 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,20 +172,14 @@ void	ft_think(t_philo *philo)
 void *ft_monitor(void *args)
 {
     t_philo *philo;
-    int i;
 
     philo = (t_philo *)args;
     while (1)
     {
-        i = 0;
-        while (i < philo->table->num_philo)
-        {
-            ft_death_check(philo->table->philos[i]);
-			ft_meals_check(philo->table->philos[i]);
-            if (ft_dead_check(philo->table->philos[i]) || ft_eaten_check(philo->table->philos[i]))
-                return (NULL);
-            i++;
-        }
+		ft_death_check(philo);
+		ft_meals_check(philo);
+		if (ft_dead_check(philo) || ft_eaten_check(philo))
+			return (NULL);
         ft_msleep(1);
     }
     return (NULL);
