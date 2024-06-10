@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/10 13:50:05 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 15:07:57 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	*ft_supervise(void *args)
 		if (table->someone_died || table->max_meals_eaten)
 			table->finished = 1;
 		pthread_mutex_unlock(&table->check_dead);
-		//ft_msleep(1);
+		ft_msleep(1);
 	}
 	return (NULL);
 }
@@ -122,7 +122,7 @@ void *ft_monitor(void *args)
     {
 		ft_death_check(philo);
 		ft_meals_check(philo);
-        //ft_msleep(1);
+        ft_msleep(1);
     }
     return (NULL);
 }
