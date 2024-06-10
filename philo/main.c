@@ -6,16 +6,21 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:10:00 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 16:01:52 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 15:31:00 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int args_valid(int argc, char **argv)
+int	ft_isdig(int c)
 {
-	int i;
-	int j;
+	return (c >= 48 && c <= 57);
+}
+
+int	args_valid(int argc, char **argv)
+{
+	int	i;
+	int	j;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -28,7 +33,7 @@ int args_valid(int argc, char **argv)
 		j = 0;
 		while (argv[i][j])
 		{
-		if (!ft_isdig(argv[i][j]) && argv[i][0] != '+')
+			if (!ft_isdig(argv[i][j]) && argv[i][0] != '+')
 			{
 				printf("Error: Arguments must be positive integers\n");
 				return (0);
@@ -43,7 +48,7 @@ int args_valid(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_table	table;
-	
+
 	if (!args_valid(argc, argv))
 		return (1);
 	if (ft_atoi(argv[1]) == 0)

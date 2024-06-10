@@ -6,16 +6,11 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/10 14:06:09 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 15:31:17 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_isdig(int c)
-{
-	return (c >= 48 && c <= 57);
-}
 
 t_time	ft_get_time_of_ms(void)
 {
@@ -72,7 +67,7 @@ void	ft_print(t_philo *philo, t_time	time, char *str)
 	size_t	count[2];
 	char	buffer[100];
 	int		i;
-	
+
 	count[0] = char_count_time(time);
 	count[1] = char_count(philo->id);
 	ft_timetoa(buffer, 0, time, count[0]);

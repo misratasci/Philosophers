@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/06/10 13:44:15 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 15:43:40 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef unsigned long long	t_time;
 
-typedef struct s_table t_table;
+typedef struct s_table		t_table;
 
 typedef struct s_philo
 {
@@ -54,9 +54,8 @@ typedef struct s_table
 	pthread_t		supervisor;
 }	t_table;
 
-
 void	table_init(t_table	*table, int ac, char **av);
-void	philo_init(t_table *table, int i);
+void	philo_init(t_table *table);
 void	create_philos(t_table *table);
 void	table_destroy(t_table *table);
 int		ft_isdig(int c);
@@ -70,5 +69,8 @@ void	*ft_live(void *args);
 void	ft_msleep(t_time time);
 void	ft_print(t_philo *philo, t_time	time, char *str);
 void	*ft_supervise(void *args);
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
 
 #endif
