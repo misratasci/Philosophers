@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/05 16:09:21 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 10:13:50 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,6 @@ void ft_leave_forks(t_philo *philo)
 
 void ft_eat(t_philo *philo)
 {
-	ft_death_check(philo);
-	ft_meals_check(philo);
 	if (ft_dead_check(philo) || ft_eaten_check(philo))
 		return ;
 	ft_take_forks(philo);
@@ -150,8 +148,6 @@ void ft_eat(t_philo *philo)
 
 void	ft_sleep(t_philo *philo)
 {
-	ft_death_check(philo);
-	ft_meals_check(philo);
 	if (ft_dead_check(philo) || ft_eaten_check(philo))
 		return ;
 	ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "is sleeping");
@@ -161,8 +157,6 @@ void	ft_sleep(t_philo *philo)
 
 void	ft_think(t_philo *philo)
 {
-	ft_death_check(philo);
-	ft_meals_check(philo);
 	if (ft_dead_check(philo) || ft_eaten_check(philo))
 		return ;
 	ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "is thinking");
