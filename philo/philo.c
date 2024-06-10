@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/10 15:07:57 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 15:24:44 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void ft_meals_check(t_philo *philo)
 
 void ft_take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
+	/*if (philo->id % 2 == 0)
+	{*/
 		pthread_mutex_lock(philo->lfork);
 		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "has taken a fork");
 		pthread_mutex_lock(philo->rfork);
 		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "has taken a fork");
-	}
+	/*}
 	else
 	{
 		pthread_mutex_lock(philo->rfork);
@@ -67,7 +67,7 @@ void ft_take_forks(t_philo *philo)
 		pthread_mutex_lock(philo->lfork);
 		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "has taken a fork");
 	}
-	return ;
+	return ;*/
 }
 
 void ft_leave_forks(t_philo *philo)
@@ -141,7 +141,11 @@ void *ft_live(void *args)
 	while (philo->table->finished == 0)
 	{	
 		ft_eat(philo);
+		if (philo->table->finished)
+			break ;
 		ft_sleep(philo);
+		if (philo->table->finished)
+			break ;
 		ft_think(philo);
 	}
 	pthread_join(monitor_thread, NULL);
