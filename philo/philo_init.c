@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/05 17:15:42 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 13:56:41 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	table_init(t_table	*table, int ac, char **av)
 	table->time_to_sleep = ft_atoi(av[4]);
 	table->someone_died = 0;
 	table->max_meals_eaten = 0;
+	table->finished = 0;
 	i = -1;
 	while (++i < table->num_philo)
 	{
@@ -59,6 +60,7 @@ void	create_philos(t_table *table)
 {
 	int i;
 
+	pthread_create(&table->supervisor, NULL, ft_supervise, table);
 	i = 0;
 	while (i < table->num_philo)
 	{
@@ -72,6 +74,7 @@ void	create_philos(t_table *table)
 		pthread_join(table->philos[i]->thread, NULL);
 		i++;
 	}
+	pthread_join(table->supervisor, NULL);
 }
 
 void	table_destroy(t_table *table)

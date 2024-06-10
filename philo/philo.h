@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/06/05 16:47:14 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 13:44:15 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ typedef struct s_table
 	t_time			start_time;
 	int				someone_died;
 	int				max_meals_eaten;
+	int				finished;
 	pthread_mutex_t	check_dead;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meals;
 	pthread_mutex_t	print;
+	pthread_t		supervisor;
 }	t_table;
 
 
@@ -67,5 +69,6 @@ t_time	ft_get_time_of_ms(void);
 void	*ft_live(void *args);
 void	ft_msleep(t_time time);
 void	ft_print(t_philo *philo, t_time	time, char *str);
+void	*ft_supervise(void *args);
 
 #endif

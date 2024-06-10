@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/05 16:47:55 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/06/10 13:39:48 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,31 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	c1;
+	unsigned char	c2;
+	size_t			i;
+
+	i = 0;
+	while (i < n)
+	{
+		c1 = (unsigned char)s1[i];
+		c2 = (unsigned char)s2[i];
+		if (c1 != c2)
+		{
+			if (c1 > c2)
+				return (1);
+			else
+				return (-1);
+		}
+		i += 1;
+		if (c1 == 0 && c2 == 0)
+			break ;
+	}
+	return (0);
+}
+
 void	ft_print(t_philo *philo, t_time	time, char *str)
 {
 	size_t	count[2];
@@ -61,7 +86,11 @@ void	ft_print(t_philo *philo, t_time	time, char *str)
 	}
 	buffer[count[0] + 1 + count[1] + 1 + i] = '\n';
 	buffer[count[0] + 1 + count[1] + 2 + i] = 0;
-	pthread_mutex_lock(&philo->table->print);
-	write(STDOUT_FILENO, buffer, count[0] + 1 + count[1] + 2 + i);
-	pthread_mutex_unlock(&philo->table->print);
+	if ((philo->table->someone_died && ft_strncmp(str, "died", 4) == 0)
+		|| (!philo->table->someone_died && ft_strncmp(str, "died", 4) != 0))
+	{
+		pthread_mutex_lock(&philo->table->print);
+		write(STDOUT_FILENO, buffer, count[0] + 1 + count[1] + 2 + i);
+		pthread_mutex_unlock(&philo->table->print);
+	}
 }
