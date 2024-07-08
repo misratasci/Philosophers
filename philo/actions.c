@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:34:52 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/10 15:35:51 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/07/08 10:48:55 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_take_forks(t_philo *philo)
 
 void	ft_leave_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->lfork);
 	pthread_mutex_unlock(philo->rfork);
+	pthread_mutex_unlock(philo->lfork);
 }
 
 void	ft_eat(t_philo *philo)
