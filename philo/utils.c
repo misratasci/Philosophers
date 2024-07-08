@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/10 15:31:17 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/07/08 21:30:24 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ void	ft_print(t_philo *philo, t_time	time, char *str)
 	}
 	buffer[count[0] + 1 + count[1] + 1 + i] = '\n';
 	buffer[count[0] + 1 + count[1] + 2 + i] = 0;
-	if ((philo->table->someone_died && ft_strncmp(str, "died", 4) == 0)
+	if (((philo->table->someone_died && ft_strncmp(str, "died", 4) == 0)
 		|| (!philo->table->someone_died && ft_strncmp(str, "died", 4) != 0))
+		&& !philo->table->max_meals_eaten)
 	{
 		pthread_mutex_lock(&philo->table->print);
 		write(STDOUT_FILENO, buffer, count[0] + 1 + count[1] + 2 + i);
