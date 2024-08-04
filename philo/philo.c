@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 19:02:19 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:31:06 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ void	*ft_supervise(void *args)
 		ft_death_check(table->philos[i]);
 		ft_meals_check(table->philos[i]);
 		i++;
-		if (i == table->num_philo - 1)
+		if (i == table->num_philo)
 			i = 0;
+		usleep(100);
 	}
 	return (NULL);
 }

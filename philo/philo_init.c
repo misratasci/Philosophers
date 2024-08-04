@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 18:54:47 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:31:37 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ void	philo_init(t_table *table)
 void	create_philos(t_table *table)
 {
 	int	i;
+	int	fin;
 
+	fin = 0;
 	pthread_create(&table->supervisor, NULL, ft_supervise, table);
 	i = 0;
 	while (i < table->num_philo)
@@ -73,10 +75,14 @@ void	create_philos(t_table *table)
 	if (table->num_philo == 1)
 	{
 		pthread_detach(table->philos[0]->thread);
-		while (table->someone_died == 0)
+		while (fin == 0)
 		{
+			pthread_mutex_lock(&table->fin);
+			fin = table->finished;
+			pthread_mutex_unlock(&table->fin);
 			ft_msleep(1);
 		}
+		pthread_join(table->supervisor, NULL);
 		return ;
 	}
 	i = 0;
