@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 18:04:11 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 18:59:48 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meals;
 	pthread_mutex_t	fin;
+	pthread_mutex_t	print;
 	pthread_t		supervisor;
 }	t_table;
 
@@ -67,7 +68,7 @@ void	ft_timetoa(char *str, int start, time_t n, size_t count);
 t_time	ft_get_time_of_ms(void);
 void	*ft_live(void *args);
 void	ft_msleep(t_time time);
-void	ft_print(t_philo *philo, t_time	time, char *str);
+void	ft_print(t_table *table, time_t time, int id, char *act);
 void	*ft_supervise(void *args);
 void	ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);

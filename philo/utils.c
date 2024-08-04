@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 18:04:35 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 18:59:55 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,12 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 			break ;
 	}
 	return (0);
+}
+
+void	ft_print(t_table *table, time_t time, int id, char *act)
+{
+	pthread_mutex_lock(&table->fin);
+	if (!table->finished)
+		printf("%ld %d %s\n", time, id, act);
+	pthread_mutex_unlock(&table->fin);
 }
