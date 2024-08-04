@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 19:37:53 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:47:32 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,30 @@ void	*ft_supervise(void *args)
 	return (NULL);
 }
 
+static int	check_fin(t_table *table)
+{
+	int	fin;
+
+	fin = 0;
+	pthread_mutex_lock(&table->fin);
+	fin = table->finished;
+	pthread_mutex_unlock(&table->fin);
+	return (fin);
+}
+
 void	*ft_live(void *args)
 {
 	t_philo		*philo;
-	int			fin;
 
 	philo = (t_philo *)args;
-	fin = 0;
-	while (fin == 0)
+	while (check_fin(philo->table) == 0)
 	{
-		pthread_mutex_lock(&philo->table->fin);
-		fin = philo->table->finished;
-		pthread_mutex_unlock(&philo->table->fin);
-		if (fin)
-			break ;
 		ft_eat(philo);
+		if (check_fin(philo->table))
+			break ;
 		ft_sleep(philo);
+		if (check_fin(philo->table))
+			break ;
 		ft_think(philo);
 	}
 	return (NULL);
