@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/07/08 21:39:33 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 18:04:35 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,33 +60,4 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 			break ;
 	}
 	return (0);
-}
-
-void	ft_print(t_philo *philo, t_time	time, char *str)
-{
-	size_t	count[2];
-	char	buffer[100];
-	int		i;
-
-	count[0] = char_count_time(time);
-	count[1] = char_count(philo->id);
-	ft_timetoa(buffer, 0, time, count[0]);
-	ft_itoa(buffer, count[0], philo->id, count[1]);
-	buffer[count[0] + 1 + count[1]] = ' ';
-	i = 0;
-	while (str[i])
-	{
-		buffer[count[0] + 1 + count[1] + 1 + i] = str[i];
-		i++;
-	}
-	buffer[count[0] + 1 + count[1] + 1 + i] = '\n';
-	buffer[count[0] + 1 + count[1] + 2 + i] = 0;
-	if (((philo->table->someone_died && ft_strncmp(str, "died", 4) == 0)
-		|| (!philo->table->someone_died && ft_strncmp(str, "died", 4) != 0))
-		&& !philo->table->max_meals_eaten)
-	{
-		pthread_mutex_lock(&philo->table->print);
-		write(STDOUT_FILENO, buffer, count[0] + 1 + count[1] + 2 + i);
-		pthread_mutex_unlock(&philo->table->print);
-	}
 }

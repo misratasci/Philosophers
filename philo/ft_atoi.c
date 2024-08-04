@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:46:29 by mitasci           #+#    #+#             */
-/*   Updated: 2024/05/30 13:46:32 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 16:43:34 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 static int	is_whitespace(int c)
 {
 	return ((c >= 9 && c <= 13) || c == ' ');
+}
+
+int	ft_isdig(int c)
+{
+	return (c >= 48 && c <= 57);
 }
 
 int	ft_atoi(const char *str)

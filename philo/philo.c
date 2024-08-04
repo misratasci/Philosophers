@@ -6,27 +6,28 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/06/10 15:38:06 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 18:25:27 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_death_check(t_philo *philo)
+int	ft_death_check(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->check_dead);
-	if (ft_get_time_of_ms() - philo->last_meal > philo->table->time_to_die
-		&& !philo->table->someone_died)
+	if (ft_get_time_of_ms() - philo->last_meal > philo->table->time_to_die &&
+		philo->table->someone_died == 0)
 	{
 		philo->table->someone_died = 1;
-		ft_print(philo, ft_get_time_of_ms() - philo->table->start_time, "died");
+		printf("%llu %d %s\n", ft_get_time_of_ms() - philo->table->start_time, philo->id, "died");
 		pthread_mutex_unlock(&philo->table->check_dead);
-		return ;
+		return (1);
 	}
 	pthread_mutex_unlock(&philo->table->check_dead);
+	return (0);
 }
 
-void	ft_meals_check(t_philo *philo)
+int	ft_meals_check(t_philo *philo)
 {
 	int	all_philos_ate;
 	int	i;
@@ -48,37 +49,32 @@ void	ft_meals_check(t_philo *philo)
 	{
 		philo->table->max_meals_eaten = 1;
 		pthread_mutex_unlock(&philo->table->meals);
-		return ;
+		return (1);
 	}
 	pthread_mutex_unlock(&philo->table->meals);
+	return (0);
 }
 
 void	*ft_supervise(void *args)
 {
 	t_table	*table;
+	int		i;
+	int		fin;
 
 	table = (t_table *)args;
-	while (table->finished == 0)
+	i = 0;
+	fin = 0;
+	while (fin == 0 && table->philos[i])
 	{
-		pthread_mutex_lock(&table->check_dead);
-		if (table->someone_died || table->max_meals_eaten)
-			table->finished = 1;
-		pthread_mutex_unlock(&table->check_dead);
-		ft_msleep(1);
-	}
-	return (NULL);
-}
-
-void	*ft_monitor(void *args)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)args;
-	while (philo->table->finished == 0)
-	{
-		ft_death_check(philo);
-		ft_meals_check(philo);
-		ft_msleep(1);
+		fin = table->someone_died + table->max_meals_eaten;
+		pthread_mutex_lock(&table->fin);
+		table->finished = fin;
+		pthread_mutex_unlock(&table->fin);
+		ft_death_check(table->philos[i]);
+		ft_meals_check(table->philos[i]);
+		i++;
+		if (i == table->num_philo - 1)
+			i = 0;
 	}
 	return (NULL);
 }
@@ -86,24 +82,30 @@ void	*ft_monitor(void *args)
 void	*ft_live(void *args)
 {
 	t_philo		*philo;
-	pthread_t	monitor_thread;
+	int			fin;
 
 	philo = (t_philo *)args;
-	if (pthread_create(&monitor_thread, NULL, ft_monitor, philo) != 0)
+	fin = 0;
+	while (fin == 0)
 	{
-		printf("Failed to create monitor thread\n");
-		return (NULL);
-	}
-	while (philo->table->finished == 0)
-	{
+		pthread_mutex_lock(&philo->table->fin);
+		fin = philo->table->finished;
+		pthread_mutex_unlock(&philo->table->fin);
+		if (fin)
+			break ;
 		ft_eat(philo);
-		if (philo->table->finished)
+		pthread_mutex_lock(&philo->table->fin);
+		fin = philo->table->finished;
+		pthread_mutex_unlock(&philo->table->fin);
+		if (fin)
 			break ;
 		ft_sleep(philo);
-		if (philo->table->finished)
+		pthread_mutex_lock(&philo->table->fin);
+		fin = philo->table->finished;
+		pthread_mutex_unlock(&philo->table->fin);
+		if (fin)
 			break ;
 		ft_think(philo);
 	}
-	pthread_join(monitor_thread, NULL);
 	return (NULL);
 }

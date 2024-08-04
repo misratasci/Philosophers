@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 16:11:07 by sessiz            #+#    #+#             */
-/*   Updated: 2024/06/10 15:43:40 by mitasci          ###   ########.fr       */
+/*   Created: 2024/05/15 16:11:07 by mitasci           #+#    #+#             */
+/*   Updated: 2024/08/04 18:04:11 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_table
 	pthread_mutex_t	check_dead;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	meals;
-	pthread_mutex_t	print;
+	pthread_mutex_t	fin;
 	pthread_t		supervisor;
 }	t_table;
 

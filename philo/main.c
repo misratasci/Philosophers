@@ -6,18 +6,13 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:10:00 by mitasci           #+#    #+#             */
-/*   Updated: 2024/07/08 11:00:58 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 16:43:09 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_isdig(int c)
-{
-	return (c >= 48 && c <= 57);
-}
-
-int	args_valid(int argc, char **argv)
+static int	args_valid(int argc, char **argv)
 {
 	int	i;
 	int	j;
