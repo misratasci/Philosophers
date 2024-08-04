@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 18:25:27 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 18:43:39 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_death_check(t_philo *philo)
 		philo->table->someone_died == 0)
 	{
 		philo->table->someone_died = 1;
-		printf("%llu %d %s\n", ft_get_time_of_ms() - philo->table->start_time, philo->id, "died");
 		pthread_mutex_unlock(&philo->table->check_dead);
+		printf("%llu %d %s\n", ft_get_time_of_ms() - philo->table->start_time, philo->id, "died");
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->table->check_dead);

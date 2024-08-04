@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 18:05:02 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 18:42:45 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ void	create_philos(t_table *table)
 	{
 		pthread_detach(table->philos[0]->thread);
 		while (table->someone_died == 0)
+		{
 			ft_msleep(1);
+		}
 		return ;
 	}
 	i = 0;
