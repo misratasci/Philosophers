@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:34:52 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 18:59:37 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:36:03 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	ft_take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->lfork);
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time, philo->id, 
-		"has taken a fork");
+	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+		philo->id, "has taken a fork");
 	pthread_mutex_lock(philo->rfork);
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time, philo->id,
-		"has taken a fork");
+	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+		philo->id, "has taken a fork");
 }
 
 void	ft_leave_forks(t_philo *philo)
@@ -37,20 +37,21 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->table->meals);
 	philo->meal_count++;
 	pthread_mutex_unlock(&philo->table->meals);
-	ft_print(philo->table, philo->last_meal - philo->table->start_time, philo->id, "is eating");
+	ft_print(philo->table, philo->last_meal - philo->table->start_time,
+		philo->id, "is eating");
 	ft_msleep(philo->table->time_to_eat);
 	ft_leave_forks(philo);
 }
 
 void	ft_sleep(t_philo *philo)
 {
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time, philo->id, 
-		"is sleeping");
+	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+		philo->id, "is sleeping");
 	ft_msleep(philo->table->time_to_sleep);
 }
 
 void	ft_think(t_philo *philo)
 {
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time, philo->id, 
-		"is thinking");
+	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+		philo->id, "is thinking");
 }

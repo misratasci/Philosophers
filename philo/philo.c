@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:09 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 19:31:06 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/04 19:37:53 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 int	ft_death_check(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->check_dead);
-	if (ft_get_time_of_ms() - philo->last_meal > philo->table->time_to_die &&
-		philo->table->someone_died == 0)
+	if (ft_get_time_of_ms() - philo->last_meal > philo->table->time_to_die
+		&& philo->table->someone_died == 0)
 	{
 		philo->table->someone_died = 1;
 		pthread_mutex_unlock(&philo->table->check_dead);
-		ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time, philo->id, "died");
+		ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+			philo->id, "died");
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->table->check_dead);
@@ -95,17 +96,7 @@ void	*ft_live(void *args)
 		if (fin)
 			break ;
 		ft_eat(philo);
-		pthread_mutex_lock(&philo->table->fin);
-		fin = philo->table->finished;
-		pthread_mutex_unlock(&philo->table->fin);
-		if (fin)
-			break ;
 		ft_sleep(philo);
-		pthread_mutex_lock(&philo->table->fin);
-		fin = philo->table->finished;
-		pthread_mutex_unlock(&philo->table->fin);
-		if (fin)
-			break ;
 		ft_think(philo);
 	}
 	return (NULL);
