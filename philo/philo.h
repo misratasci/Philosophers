@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/07 16:37:46 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/07 22:17:16 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	philo_init(t_table *table);
 void	create_philos(t_table *table);
 void	table_destroy(t_table *table);
 int		ft_isdig(int c);
+size_t	ft_strlen(char *s);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *str);
 size_t	char_count(int n);
 size_t	char_count_time(time_t n);
