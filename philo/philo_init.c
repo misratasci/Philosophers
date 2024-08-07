@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 19:42:18 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/07 16:46:27 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	table_init(t_table	*table, int ac, char **av)
 	pthread_mutex_init(&table->meals, NULL);
 	pthread_mutex_init(&table->fin, NULL);
 	pthread_mutex_init(&table->print, NULL);
-	table->start_time = ft_get_time_of_ms();
+	table->start_time = ft_timestamp();
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
@@ -84,7 +84,6 @@ void	create_philos(t_table *table)
 	{
 		pthread_create(&table->philos[i]->thread, NULL,
 			ft_live, table->philos[i]);
-		usleep(100);
 		i++;
 	}
 	if (table->num_philo == 1)
@@ -115,4 +114,12 @@ void	table_destroy(t_table *table)
 	pthread_mutex_destroy(&table->meals);
 	pthread_mutex_destroy(&table->fin);
 	pthread_mutex_destroy(&table->print);
+	i = 0;
+	while (i < table->num_philo)
+	{
+		free(table->philos[i]);
+		i++;
+	}
+	free(table->philos);
+	free(table->forks);
 }

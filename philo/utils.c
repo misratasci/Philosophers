@@ -6,13 +6,13 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:33:12 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 19:42:41 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/07 16:56:11 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_time	ft_get_time_of_ms(void)
+t_time	ft_timestamp(void)
 {
 	struct timeval	tp;
 	t_time			time;
@@ -24,7 +24,11 @@ t_time	ft_get_time_of_ms(void)
 
 void	ft_msleep(t_time time)
 {
-	usleep(time * 1000);
+	t_time	tmp;
+
+	tmp = ft_timestamp();
+	while (ft_timestamp() - tmp < time)
+		usleep(time / 10);
 }
 
 size_t	ft_strlen(char *s)

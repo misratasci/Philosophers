@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:07 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 18:59:48 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/07 16:37:46 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ size_t	char_count(int n);
 size_t	char_count_time(time_t n);
 void	ft_itoa(char *str, int start, int n, size_t count);
 void	ft_timetoa(char *str, int start, time_t n, size_t count);
-t_time	ft_get_time_of_ms(void);
+t_time	ft_timestamp(void);
 void	*ft_live(void *args);
 void	ft_msleep(t_time time);
 void	ft_print(t_table *table, time_t time, int id, char *act);

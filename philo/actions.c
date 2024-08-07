@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:34:52 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/04 19:36:03 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/07 16:42:40 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	ft_take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->lfork);
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+	ft_print(philo->table, ft_timestamp() - philo->table->start_time,
 		philo->id, "has taken a fork");
 	pthread_mutex_lock(philo->rfork);
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+	ft_print(philo->table, ft_timestamp() - philo->table->start_time,
 		philo->id, "has taken a fork");
 }
 
@@ -32,7 +32,7 @@ void	ft_eat(t_philo *philo)
 {
 	ft_take_forks(philo);
 	pthread_mutex_lock(&philo->table->check_dead);
-	philo->last_meal = ft_get_time_of_ms();
+	philo->last_meal = ft_timestamp();
 	pthread_mutex_unlock(&philo->table->check_dead);
 	pthread_mutex_lock(&philo->table->meals);
 	philo->meal_count++;
@@ -45,13 +45,13 @@ void	ft_eat(t_philo *philo)
 
 void	ft_sleep(t_philo *philo)
 {
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+	ft_print(philo->table, ft_timestamp() - philo->table->start_time,
 		philo->id, "is sleeping");
 	ft_msleep(philo->table->time_to_sleep);
 }
 
 void	ft_think(t_philo *philo)
 {
-	ft_print(philo->table, ft_get_time_of_ms() - philo->table->start_time,
+	ft_print(philo->table, ft_timestamp() - philo->table->start_time,
 		philo->id, "is thinking");
 }
