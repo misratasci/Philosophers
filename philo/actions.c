@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:34:52 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/07 21:56:09 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/07 22:44:44 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_take_forks(t_philo *philo)
 {
-	if (philo->id == 1)
+	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->rfork);
 		ft_print(philo->table, ft_timestamp() - philo->table->start_time,

@@ -6,7 +6,7 @@
 /*   By: mitasci <mitasci@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:28:02 by mitasci           #+#    #+#             */
-/*   Updated: 2024/08/07 16:46:27 by mitasci          ###   ########.fr       */
+/*   Updated: 2024/08/07 22:40:43 by mitasci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	philo_init(t_table *table)
 	while (i < table->num_philo)
 	{
 		table->philos[i] = (t_philo *)malloc(sizeof(t_philo));
+		if (!table->philos[i])
+			return ;
 		table->philos[i]->id = i + 1;
 		table->philos[i]->last_meal = table->start_time;
 		table->philos[i]->lfork = &table->forks[i];
